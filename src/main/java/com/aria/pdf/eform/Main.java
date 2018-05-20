@@ -35,7 +35,6 @@ public class Main {
         File formFile = new File(formPath);
         PDDocument doc = PDDocument.load(formFile);
         PDPage firstPage = doc.getPage(0);
-        PDFont font = PDType1Font.COURIER;
 
         PDPageContentStream stream = new PDPageContentStream(
                 doc,
@@ -44,6 +43,10 @@ public class Main {
                 true,
                 true);
 
+        // for debug only!!
+        drawCoordinateRuler(stream);
+
+        PDFont font = PDType1Font.COURIER;
         stream.setFont(font, 9);
 
         stream.beginText();
@@ -100,5 +103,62 @@ public class Main {
             }
 
         }
+    }
+
+    /**
+     * Draw ruler coordinate on the edge of screen (for debug purpose only!!)
+     * @param stream
+     * @throws IOException
+     */
+    public void drawCoordinateRuler(PDPageContentStream stream) throws IOException {
+        PDFont font = PDType1Font.COURIER;
+        stream.setFont(font, 5);
+
+        int coordX = 0;
+        int coordY = 0;
+
+        while (coordY <= 1000) {
+            coordY += 5;
+
+            stream.beginText();
+            stream.newLineAtOffset(coordX, coordY);
+            stream.showText("y = " + coordY);
+            stream.endText();
+        }
+
+        coordX = 630;
+        coordY = 0;
+
+        while (coordY <= 1000) {
+            coordY += 5;
+
+            stream.beginText();
+            stream.newLineAtOffset(coordX, coordY);
+            stream.showText("y = " + coordY);
+            stream.endText();
+        }
+
+        coordX = 0;
+        coordY = 5;
+
+        while (coordX <= 700) {
+            coordX += 20;
+            stream.beginText();
+            stream.newLineAtOffset(coordX, coordY);
+            stream.showText("" + coordX);
+            stream.endText();
+        }
+
+        coordX = 0;
+        coordY = 900;
+
+        while (coordX <= 700) {
+            coordX += 20;
+            stream.beginText();
+            stream.newLineAtOffset(coordX, coordY);
+            stream.showText("" + coordX);
+            stream.endText();
+        }
+
     }
 }
